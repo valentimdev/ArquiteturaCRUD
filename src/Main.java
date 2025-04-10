@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
@@ -196,7 +197,8 @@ public class Main {
                     "ID: " + turma.getId() +
                             " | Nome: " + turma.getNome() +
                             " | Professor: " + turma.getProfessor().getNome() +
-                            " | Alunos: " + turma.getAlunos().size()
+                            " | Alunos: " + turma.getAlunos().stream()
+                            .map(Aluno::getNome).collect(Collectors.joining(", "))
             );
         });
     }
