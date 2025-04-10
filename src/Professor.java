@@ -1,5 +1,5 @@
 public class Professor {
-    private final int id;
+    private int id;
     private String nome;
 
     public Professor(int id, String nome) {
@@ -9,10 +9,11 @@ public class Professor {
 
     public int getId() { return id; }
     public String getNome() { return nome; }
+
     public void setNome(String nome) { this.nome = nome; }
 
     @Override
     public String toString() {
-        return "Professor [ID: " + id + ", Nome: " + nome + "]";
+        return "Professor{id=" + id + ", nome='" + nome + "'}";
     }
 }

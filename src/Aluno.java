@@ -1,5 +1,5 @@
 public class Aluno {
-    private final int id;
+    private int id;
     private String nome;
 
     public Aluno(int id, String nome) {
@@ -9,10 +9,11 @@ public class Aluno {
 
     public int getId() { return id; }
     public String getNome() { return nome; }
+
     public void setNome(String nome) { this.nome = nome; }
 
     @Override
     public String toString() {
-        return "Aluno [ID: " + id + ", Nome: " + nome + "]";
+        return "Aluno{id=" + id + ", nome='" + nome + "'}";
     }
 }

@@ -1,23 +1,43 @@
 import java.util.List;
 
 public class TurmaController {
-    private final TurmaDAO turmaDAO = new TurmaDAO();
-    private final ProfessorDAO professorDAO = new ProfessorDAO();
+    private final TurmaRepository turmaRepository;
 
-    public void cadastrarTurma(int id, String nome, int idProfessor) {
-        validarDados(id, nome, idProfessor);
-        turmaDAO.criar(TurmaFactory.criarTurma(id, nome, idProfessor));
+    public TurmaController() {
+        this.turmaRepository = TurmaRepository.getInstance();
     }
 
-    public List<Turma> listarTurmas() {
-        return turmaDAO.listar();
+    public void criarTurma(int id, String nome, Professor professor) {
+        Turma turma = TurmaFactory.criarTurma(id, nome, professor);
+        turmaRepository.adicionarTurma(turma);
     }
 
-    private void validarDados(int id, String nome, int idProfessor) {
-        if (id <= 0) throw new IllegalArgumentException("ID turma inválido");
-        if (nome == null || nome.trim().isEmpty()) throw new IllegalArgumentException("Nome turma inválido");
-        if (professorDAO.buscarPorId(idProfessor) == null) {
-            throw new IllegalArgumentException("Professor não encontrado");
+    public Turma buscarTurma(int id) {
+        return turmaRepository.buscarTurma(id);
+    }
+
+    public void atualizarTurma(int id, String novoNome) {
+        turmaRepository.atualizarTurma(id, novoNome);
+    }
+
+    public void deletarTurma(int id) {
+        turmaRepository.removerTurma(id);
+    }
+
+    public void adicionarAlunoNaTurma(int turmaId, Aluno aluno) {
+        Turma turma = turmaRepository.buscarTurma(turmaId);
+        if (turma != null) {
+            turma.adicionarAluno(aluno);
         }
+    }
+
+    public void removerAlunoDaTurma(int turmaId, Aluno aluno) {
+        Turma turma = turmaRepository.buscarTurma(turmaId);
+        if (turma != null) {
+            turma.removerAluno(aluno);
+        }
+    }
+    public List<Turma> listarTurmas() {
+        return turmaRepository.listarTurmas();
     }
 }

@@ -1,19 +1,29 @@
 import java.util.List;
 
 public class ProfessorController {
-    private final ProfessorDAO professorDAO = new ProfessorDAO();
+    private ProfessorRepository professorRepository = ProfessorRepository.getInstance();
 
-    public void cadastrarProfessor(int id, String nome) {
-        validarDados(id, nome);
-        professorDAO.criar(new Professor(id, nome));
+    public ProfessorController() {
+        this.professorRepository = ProfessorRepository.getInstance();
+    }
+    public void criarProfessor(int id, String nome) {
+        Professor professor = ProfessorFactory.criarProfessor(id, nome);
+        professorRepository.adicionarProfessor(professor);
+    }
+
+    public Professor buscarProfessor(int id) {
+        return professorRepository.buscarProfessor(id);
+    }
+
+    public void atualizarProfessor(int id, String novoNome) {
+        professorRepository.atualizarProfessor(id, novoNome);
+    }
+
+    public void deletarProfessor(int id) {
+        professorRepository.removerProfessor(id);
     }
 
     public List<Professor> listarProfessores() {
-        return professorDAO.listar();
-    }
-
-    private void validarDados(int id, String nome) {
-        if (id <= 0) throw new IllegalArgumentException("ID inválido");
-        if (nome == null || nome.trim().isEmpty()) throw new IllegalArgumentException("Nome inválido");
+        return professorRepository.listarProfessores();
     }
 }
